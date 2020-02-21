@@ -7,8 +7,18 @@
   min-width: 150px;
 }
 .flex-messages {
+  order: 3; /* this is flexbox item order*/
+  min-width: 150px;
+}
+.flex-groupMessages {
   order: 2; /* this is flexbox item order*/
   min-width: 150px;
+}
+.name {
+  width: 200px;
+}
+input {
+  width: 200px;
 }
 .hidden {
   visibility: hidden;

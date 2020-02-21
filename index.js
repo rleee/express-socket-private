@@ -26,13 +26,16 @@ io.on('connection', function(socket) {
 
   // Listen for new message and emit out
   socket.on('send_message', function(message) {
-    console.log(users);
-    console.log(message);
     let socketObj = users.find(user => {
       return user.username === message.receiver;
     });
     let socketID = socketObj.socketID;
     io.to(socketID).emit('new_message', message);
+  });
+
+  // Listen for group message and emit out
+  socket.on('send_group_message', function(message) {
+    io.emit('send_group_message', message);
   });
 });
 

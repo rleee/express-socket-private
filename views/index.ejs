@@ -11,7 +11,13 @@
   </head>
   <body>
     <form class="usernameForm">
-      <input type="text" class="name" name="name" placeholder="Enter name" />
+      <input
+        type="text"
+        class="name"
+        name="name"
+        placeholder="Enter name"
+        size="50"
+      />
       <button type="submit">Login</button>
     </form>
     <div>
@@ -21,10 +27,28 @@
       </p>
     </div>
     <div class="flex-container">
+      <!-- USERLIST START -->
       <div class="flex-userslist">
         Online users:
         <ul class="usersList"></ul>
       </div>
+      <!-- USERLIST END -->
+
+      <!-- GROUP MESSAGE START -->
+      <div class="flex-groupMessages">
+        <form class="groupMessageForm">
+          <input
+            type="text"
+            class="groupMessage"
+            placeholder="type a message to group..."
+          />
+          <button type="submit">Send</button>
+        </form>
+        <ul class="gMessages"></ul>
+      </div>
+      <!-- GROUP MESSAGE END -->
+
+      <!-- PRIVATE MESSAGE START -->
       <div class="flex-messages">
         <form class="messageForm hidden">
           <input
@@ -36,6 +60,7 @@
         </form>
         <ul class="messages"></ul>
       </div>
+      <!-- PRIVATE MESSAGE END -->
     </div>
     <script src="/js/socketClient.js"></script>
   </body>

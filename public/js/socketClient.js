@@ -30,6 +30,22 @@ $('.messageForm').submit(function(e) {
   $('.typeMessage').val('');
 });
 
+// to emit group message
+$('.groupMessageForm').submit(function(e) {
+  e.preventDefault();
+
+  let message = $('.groupMessage').val();
+  socket.emit('send_group_message', {
+    sender: sender,
+    receiver: receiver,
+    message: message,
+  });
+
+  let messageLi = '<li>' + sender + ': ' + message + '</li>';
+  $('.gMessages').append(messageLi);
+  $('.groupMessage').val('');
+});
+
 // assign targetUser
 function onTargetUserSelected(targetUser) {
   receiver = targetUser;
@@ -56,17 +72,29 @@ socket.on('user_connected', function(users) {
   // append newUsers to list
   let usersList = $('.usersList');
   for (let x = 0; x < newUsers.length; x++) {
-    usersList.append(
-      "<li class='item'><button onclick='onTargetUserSelected(this.innerHTML);'>" +
-        newUsers[x] +
-        '</button></li>'
-    );
+    if (newUsers[x] == sender) {
+      usersList.append("<li class='item'>" + newUsers[x] + '</li>');
+    } else {
+      usersList.append(
+        "<li class='item'><button onclick='onTargetUserSelected(this.innerHTML);'>" +
+          newUsers[x] +
+          '</button></li>'
+      );
+    }
   }
 });
 
 // to receive message from server
 socket.on('new_message', function(message) {
-  console.log(message);
   let messageLi = '<li>' + message.sender + ': ' + message.message + '</li>';
   $('.messages').append(messageLi);
+});
+
+// to receive group message from server
+socket.on('send_group_message', function(message) {
+  let messageLi = '<li>' + message.sender + ': ' + message.message + '</li>';
+  if (message.sender == sender) {
+    return;
+  }
+  $('.gMessages').append(messageLi);
 });
