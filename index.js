@@ -44,6 +44,7 @@ io.on('connection', function(socket) {
     users.filter(user => {
       if (user.socketID == socket.id) {
         disconnectedUsername = user.username;
+        users.splice(users.indexOf(user), 1);
       }
     });
     io.emit('disconnected_user', disconnectedUsername);
