@@ -37,6 +37,17 @@ io.on('connection', function(socket) {
   socket.on('send_group_message', function(message) {
     io.emit('send_group_message', message);
   });
+
+  // if user disconnect / closed window
+  socket.on('disconnect', function() {
+    let disconnectedUsername;
+    users.filter(user => {
+      if (user.socketID == socket.id) {
+        disconnectedUsername = user.username;
+      }
+    });
+    io.emit('disconnected_user', disconnectedUsername);
+  });
 });
 
 const PORT = process.env.PORT || 8000;

@@ -98,3 +98,13 @@ socket.on('send_group_message', function(message) {
   }
   $('.gMessages').append(messageLi);
 });
+
+// to receive disconnected uer and remove element
+socket.on('disconnected_user', function(user) {
+  $('.item').each(function() {
+    if ($(this).text() == user) {
+      $(this).remove();
+      return;
+    }
+  });
+});
