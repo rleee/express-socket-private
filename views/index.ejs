@@ -10,9 +10,9 @@
     <title>Private Chat</title>
   </head>
   <body>
-    <form action="#">
-      <input type="text" id="name" name="name" placeholder="Enter name" />
-      <input type="submit" />
+    <form class="usernameForm">
+      <input type="text" class="name" name="name" placeholder="Enter name" />
+      <button type="submit">Login</button>
     </form>
     <div>
       <p>
@@ -21,11 +21,20 @@
       </p>
     </div>
     <div class="flex-container">
-      <div class="flex-item">
+      <div class="flex-userslist">
+        Online users:
         <ul class="usersList"></ul>
       </div>
-      <div class="flex-item">
-        <ul class="usersList"></ul>
+      <div class="flex-messages">
+        <form class="messageForm hidden">
+          <input
+            type="text"
+            class="typeMessage"
+            placeholder="type a message..."
+          />
+          <button type="submit">Send</button>
+        </form>
+        <ul class="messages"></ul>
       </div>
     </div>
     <script src="/js/socketClient.js"></script>

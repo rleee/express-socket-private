@@ -3,23 +3,41 @@ let sender = '';
 let receiver = '';
 
 // to emit username and assign current user
-$('form').submit(function(e) {
+$('.usernameForm').submit(function(e) {
   e.preventDefault();
 
-  let name = $('#name').val();
+  let name = $('.name').val();
   socket.emit('user_connected', name);
+
   sender = name;
   $('.sender').html(sender);
-  $('#name').val('');
+  $('.usernameForm').hide();
+});
+
+// to emit message to server
+$('.messageForm').submit(function(e) {
+  e.preventDefault();
+
+  let message = $('.typeMessage').val();
+  socket.emit('send_message', {
+    sender: sender,
+    receiver: receiver,
+    message: message,
+  });
+
+  let messageLi = '<li>' + sender + ': ' + message + '</li>';
+  $('.messages').append(messageLi);
+  $('.typeMessage').val('');
 });
 
 // assign targetUser
 function onTargetUserSelected(targetUser) {
   receiver = targetUser;
   $('.receiver').html(receiver);
+  $('.messageForm').removeClass('hidden');
 }
 
-// to receive userList
+// to receive userList from server
 socket.on('user_connected', function(users) {
   let items = [];
   let users_arr = [];
@@ -44,4 +62,11 @@ socket.on('user_connected', function(users) {
         '</button></li>'
     );
   }
+});
+
+// to receive message from server
+socket.on('new_message', function(message) {
+  console.log(message);
+  let messageLi = '<li>' + message.sender + ': ' + message.message + '</li>';
+  $('.messages').append(messageLi);
 });

@@ -14,18 +14,25 @@ app.get('/', (req, res) => {
 
 const users = [];
 io.on('connection', function(socket) {
-  console.log('Visitor ', socket.id);
-  console.log('list of users: ', users);
-
   // Add connected users to list and emit the list out to all users
   socket.on('user_connected', function(username) {
-    console.log('user signIn: ' + username);
     const newUser = {
       username: username,
       socketID: socket.id,
     };
     users.push(newUser);
     io.emit('user_connected', users);
+  });
+
+  // Listen for new message and emit out
+  socket.on('send_message', function(message) {
+    console.log(users);
+    console.log(message);
+    let socketObj = users.find(user => {
+      return user.username === message.receiver;
+    });
+    let socketID = socketObj.socketID;
+    io.to(socketID).emit('new_message', message);
   });
 });
 
