@@ -36,6 +36,7 @@ io.on('connection', function(socket) {
   });
 });
 
-http.listen(8000, () => {
+const PORT = process.env.PORT || 8000;
+http.listen(PORT, () => {
   console.log('connected at 8000');
 });
