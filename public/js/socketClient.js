@@ -64,7 +64,7 @@ $('.groupMessageForm').submit(function(e) {
 function onTargetUserSelected(targetUser) {
   receiver = targetUser;
   $('.receiver').html(receiver);
-  $('.flex-messages').removeClass('hidden');
+  $('.messageForm').removeClass('hidden');
 }
 
 // to receive userList from server
