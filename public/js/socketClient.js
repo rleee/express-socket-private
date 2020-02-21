@@ -7,11 +7,17 @@ $('.usernameForm').submit(function(e) {
   e.preventDefault();
 
   let name = $('.name').val();
+  if (name == '') {
+    alert('siapa kau woy!');
+    return;
+  }
+
   socket.emit('user_connected', name);
 
   sender = name;
   $('.sender').html(sender);
   $('.usernameForm').hide();
+  $('.flex-groupMessages').removeClass('hidden');
 });
 
 // to emit message to server
@@ -19,6 +25,10 @@ $('.messageForm').submit(function(e) {
   e.preventDefault();
 
   let message = $('.typeMessage').val();
+  if (message == '') {
+    return;
+  }
+
   socket.emit('send_message', {
     sender: sender,
     receiver: receiver,
@@ -35,6 +45,10 @@ $('.groupMessageForm').submit(function(e) {
   e.preventDefault();
 
   let message = $('.groupMessage').val();
+  if (message == '') {
+    return;
+  }
+
   socket.emit('send_group_message', {
     sender: sender,
     receiver: receiver,
